@@ -17,7 +17,7 @@ namespace OOLibraryConsole.Domain.Acervo
 
         public Livro Livro { get; set; }
 
-        public Exemplar(int id, Livro livro)
+        public Exemplar(Livro livro)
         {
             Id = proximoId++;
             EstadoConservacao = "Bom";

@@ -124,22 +124,16 @@ namespace OOLibrary
 
             foreach (Associado associado in associados)
             {
-                // Cada associado faz empréstimos de alguns livros aleatórios
                 Random random = new Random();
-                int numEmprestimos = random.Next(1, 4); // Cada associado fará entre 1 e 3 empréstimos
-
+                int numEmprestimos = random.Next(1, 4);
                 for (int i = 0; i < numEmprestimos; i++)
                 {
-                    // Escolhe um livro aleatório para empréstimo
                     Livro livroSelecionado = livros[random.Next(livros.Count)];
 
-                    // Cria um novo empréstimo
                     Emprestimo emprestimo = new Emprestimo(livroSelecionado, DateTime.Now, DateTime.Now.AddDays(14)); // Prazo de 14 dias
 
-                    // Adiciona o empréstimo à conta do associado
                     associado.AdicionarEmprestimo(emprestimo);
 
-                    // Remove o livro emprestado da lista para evitar empréstimos duplicados
                     livros.Remove(livroSelecionado);
                 }
             }
@@ -247,12 +241,12 @@ namespace OOLibrary
             Console.Write("Digite o nome da Coleção: ");
             string nome = Console.ReadLine();
 
-            // Busca pela coleção com o nome especificado
+
             Colecao colecaoParaRemover = Biblioteca.Colecoes.FirstOrDefault(c => c.Nome.Equals(nome, StringComparison.OrdinalIgnoreCase));
 
             if (colecaoParaRemover != null)
             {
-                // Remove a coleção da lista da biblioteca
+
                 Biblioteca.Colecoes.Remove(colecaoParaRemover);
                 Console.WriteLine($"Coleção '{nome}' removida com sucesso da biblioteca.");
             }
@@ -275,7 +269,6 @@ namespace OOLibrary
 
                 if (livroParaExcluir != null)
                 {
-                    // Encontrou o livro, agora precisamos encontrar a coleção que o contém
                     Colecao colecaoDoLivro = null;
                     foreach (var colecao in Biblioteca.Colecoes)
                     {
@@ -288,7 +281,6 @@ namespace OOLibrary
 
                     if (colecaoDoLivro != null)
                     {
-                        // Remove o livro da coleção
                         colecaoDoLivro.RemoverLivro(livroParaExcluir);
                         Console.WriteLine($"Livro '{titulo}' removido da coleção '{colecaoDoLivro.Nome}'.");
                     }
@@ -370,7 +362,6 @@ namespace OOLibrary
 
             if (FuncionarioPrincipal is Funcionario)
             {
-                // Mostrar empréstimos de todos os associados para funcionários
                 foreach (var associado in Biblioteca.Associados)
                 {
                     Console.WriteLine($"Associado: {associado.Nome}");
@@ -383,7 +374,6 @@ namespace OOLibrary
             }
             else if (FuncionarioPrincipal is Associado associadoLogado)
             {
-                // Mostrar empréstimos apenas do associado logado
                 Console.WriteLine($"Empréstimos de {associadoLogado.Nome}:");
                 foreach (var emprestimo in associadoLogado.Emprestimos)
                 {
@@ -401,7 +391,6 @@ namespace OOLibrary
             Console.Clear();
             Console.WriteLine("Dados dos Autores:");
 
-            // Obter a lista de autores únicos
             var autores = Biblioteca.Colecoes
                 .SelectMany(c => c.Livros)
                 .SelectMany(l => l.Autores)
@@ -412,7 +401,6 @@ namespace OOLibrary
             {
                 Console.WriteLine($"Autor: {autor.Nome}");
 
-                // Obter livros do autor atual
                 var livrosDoAutor = Biblioteca.Colecoes
                     .SelectMany(c => c.Livros)
                     .Where(l => l.Autores.Any(a => a.Nome == autor.Nome))
@@ -435,18 +423,15 @@ namespace OOLibrary
 
             if (FuncionarioPrincipal is Funcionario funcionario)
             {
-                // Se for Funcionário
                 Console.WriteLine("Perfil do Funcionário:");
                 Console.WriteLine($"Nome: {funcionario.Nome}");
                 Console.WriteLine($"Email: {funcionario.Email}");
 
-                // Verifica se o cargo do funcionário está preenchido
                 if (!string.IsNullOrEmpty(funcionario.Cargo))
                 {
                     Console.WriteLine($"Cargo: {funcionario.Cargo}");
                 }
 
-                // Verifica se o salário do funcionário está preenchido
                 if (funcionario is Funcionario)
                 {
                     Console.WriteLine($"Salário: {funcionario.Salario.ToString("C2")}");
@@ -454,7 +439,6 @@ namespace OOLibrary
             }
             else if (FuncionarioPrincipal is Associado associado)
             {
-                // Se for Associado
                 Console.WriteLine("Perfil do Associado:");
                 Console.WriteLine($"Nome: {associado.Nome}");
                 Console.WriteLine($"Email: {associado.Email}");
